@@ -20,6 +20,7 @@ class ViewController: UIViewController {
 
         createTestCards()
         createCardViews()
+        createTapRecognizer()
     }
 
     private func createTestCards() {
@@ -50,6 +51,30 @@ class ViewController: UIViewController {
 
             return cardView
         }
+    }
+
+    private func moveFrontCardToBack() {
+        guard let frontCard = cardColors.last, let frontCardView = cardViews.last else {
+            return
+        }
+
+        cardColors.popLast()
+        cardColors.insert(frontCard, atIndex: 0)
+        cardViews.popLast()
+        cardViews.insert(frontCardView, atIndex: 0)
+
+        cardContainerView.sendSubviewToBack(frontCardView)
+    }
+
+    // MARK: Gestures
+
+    private func createTapRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "didTapCards:")
+        cardContainerView.addGestureRecognizer(tapRecognizer)
+    }
+
+    dynamic private func didTapCards(recognizer: UITapGestureRecognizer) {
+        moveFrontCardToBack()
     }
 }
 
