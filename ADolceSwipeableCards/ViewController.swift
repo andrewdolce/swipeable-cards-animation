@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var cardContainerView: UIView!
 
     private var cardColors = [UIColor]()
-    private var cardViews = [UIView]()
+    private var cardViewsInStack = [UIView]()
+    private var flyingCardView: UIView? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
     }
 
     private func createCardViews() {
-        cardViews = cardColors.map { color in
+        cardViewsInStack = cardColors.map { color in
             let cardView = CardView(frame: self.cardContainerView.frame)
             cardView.backgroundColor = color
 
@@ -53,17 +54,49 @@ class ViewController: UIViewController {
         }
     }
 
+    private func updateCardViews() {
+        let hiddenCardTransform = CGAffineTransformMakeScale(0.8, 0.8);
+
+        let transformsFrontToBack = [
+            CGAffineTransformIdentity,
+            CGAffineTransformTranslate(CGAffineTransformMakeScale(0.9, 0.9), 0, -40),
+            CGAffineTransformTranslate(CGAffineTransformMakeScale(0.8, 0.8), 0, -80)
+        ]
+
+        for (index, cardView) in cardViewsInStack.reverse().enumerate() {
+            if index < transformsFrontToBack.count {
+                cardView.transform = transformsFrontToBack[index]
+                cardView.alpha = 1
+            } else {
+                cardView.transform = hiddenCardTransform
+                cardView.alpha = 0
+            }
+        }
+    }
+
     private func moveFrontCardToBack() {
-        guard let frontCard = cardColors.last, let frontCardView = cardViews.last else {
+        guard let frontCard = cardColors.last, let frontCardView = cardViewsInStack.last else {
             return
         }
 
         cardColors.popLast()
         cardColors.insert(frontCard, atIndex: 0)
-        cardViews.popLast()
-        cardViews.insert(frontCardView, atIndex: 0)
+        cardViewsInStack.popLast()
 
-        cardContainerView.sendSubviewToBack(frontCardView)
+        throwCardView(frontCardView)
+
+        UIView.animateWithDuration(0.5, animations: updateCardViews)
+    }
+
+    private func throwCardView(cardView: UIView) {
+        let thrownTransform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(CGFloat(M_1_PI) / 4.0), 400, 0)
+        UIView.animateWithDuration(0.5, animations: {
+            cardView.transform = thrownTransform
+        }, completion: { finished in
+            cardView.alpha = 0
+            self.cardContainerView.sendSubviewToBack(cardView)
+            self.cardViewsInStack.insert(cardView, atIndex: 0)
+        })
     }
 
     // MARK: Gestures
@@ -77,4 +110,8 @@ class ViewController: UIViewController {
         moveFrontCardToBack()
     }
 }
+
+
+
+
 
