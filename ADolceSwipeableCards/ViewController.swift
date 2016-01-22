@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var cardContainerView: UIView!
 
-    private var cardColors = [UIColor]()
+    private var cards = [Card]()
     private var cardViewsInStack = [UIView]()
     private var flyingCardView: UIView? = nil
 
@@ -25,20 +25,20 @@ class ViewController: UIViewController {
     }
 
     private func createTestCards() {
-        cardColors = [
-            UIColor.redColor(),
-            UIColor.orangeColor(),
-            UIColor.yellowColor(),
-            UIColor.greenColor(),
-            UIColor.blueColor(),
-            UIColor.purpleColor()
+        cards = [
+            Card(color: UIColor.redColor()),
+            Card(color: UIColor.orangeColor()),
+            Card(color: UIColor.yellowColor()),
+            Card(color: UIColor.greenColor()),
+            Card(color: UIColor.blueColor()),
+            Card(color: UIColor.purpleColor())
         ]
     }
 
     private func createCardViews() {
-        cardViewsInStack = cardColors.map { color in
+        cardViewsInStack = cards.map { card in
             let cardView = CardView(frame: self.cardContainerView.frame)
-            cardView.backgroundColor = color
+            cardView.backgroundColor = card.color
 
             self.cardContainerView.addSubview(cardView)
 
@@ -75,12 +75,12 @@ class ViewController: UIViewController {
     }
 
     private func moveFrontCardToBack() {
-        guard let frontCard = cardColors.last, let frontCardView = cardViewsInStack.last else {
+        guard let frontCard = cards.last, let frontCardView = cardViewsInStack.last else {
             return
         }
 
-        cardColors.popLast()
-        cardColors.insert(frontCard, atIndex: 0)
+        cards.popLast()
+        cards.insert(frontCard, atIndex: 0)
         cardViewsInStack.popLast()
 
         throwCardView(frontCardView)
