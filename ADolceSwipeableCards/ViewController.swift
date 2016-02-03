@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IntrepidSwiftWisdom
 
 class ViewController: UIViewController {
 
@@ -31,12 +32,11 @@ class ViewController: UIViewController {
 
     private func createTestCards() {
         cards = [
-            Card(color: UIColor.redColor()),
-            Card(color: UIColor.orangeColor()),
-            Card(color: UIColor.yellowColor()),
-            Card(color: UIColor.greenColor()),
-            Card(color: UIColor.blueColor()),
-            Card(color: UIColor.purpleColor())
+            Card(image: UIImage(named: "album0")),
+            Card(image: UIImage(named: "album1")),
+            Card(image: UIImage(named: "album2")),
+            Card(image: UIImage(named: "album3")),
+            Card(image: UIImage(named: "album4"))
         ]
     }
 
@@ -53,14 +53,20 @@ class ViewController: UIViewController {
 
     private func cardViewForIndex(index: Int) -> UIView {
         let card = cards[index];
-        let cardView = CardView(frame: cardContainerView.frame)
-        cardView.backgroundColor = card.color
+
+        // TODO: LOAD FROM XIB
+        let cardView = CardView.ip_fromNib("CardView")
+        cardView.image = card.image
+        cardView.overlayAlpha = 0.7
+        cardView.backgroundColor = UIColor.yellowColor()
         return cardView
     }
 
     private func addCardViewToBackOfStack(cardView: UIView) {
         cardViewsInStack.append(cardView)
-        self.cardContainerView.insertSubview(cardView, atIndex: 0)
+
+        cardView.frame = cardContainerView.bounds
+        cardContainerView.insertSubview(cardView, atIndex: 0)
 
         let margins = self.cardContainerView.layoutMarginsGuide
         cardView.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor).active = true
@@ -80,6 +86,10 @@ class ViewController: UIViewController {
 
         for (index, cardView) in cardViews.enumerate() {
             cardView.transform = transformsFrontToBack[index]
+        }
+
+        if let frontCard = cardViews.first as? CardView {
+            frontCard.overlayAlpha = 0
         }
     }
 

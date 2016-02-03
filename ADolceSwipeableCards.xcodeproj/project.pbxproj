@@ -14,6 +14,7 @@
 		AFA4F4831C51AEED0076C884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFA4F4811C51AEED0076C884 /* LaunchScreen.storyboard */; };
 		AFA4F48B1C51B0060076C884 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA4F48A1C51B0060076C884 /* CardView.swift */; };
 		AFA4F48D1C52C9BB0076C884 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA4F48C1C52C9BB0076C884 /* Card.swift */; };
+		AFA4F48F1C61B2660076C884 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFA4F48E1C61B2660076C884 /* CardView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		AFA4F4841C51AEED0076C884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFA4F48A1C51B0060076C884 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		AFA4F48C1C52C9BB0076C884 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		AFA4F48E1C61B2660076C884 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				AFA4F4811C51AEED0076C884 /* LaunchScreen.storyboard */,
 				AFA4F4841C51AEED0076C884 /* Info.plist */,
 				AFA4F48A1C51B0060076C884 /* CardView.swift */,
+				AFA4F48E1C61B2660076C884 /* CardView.xib */,
 				AFA4F48C1C52C9BB0076C884 /* Card.swift */,
 			);
 			path = ADolceSwipeableCards;
@@ -130,6 +133,7 @@
 			files = (
 				AFA4F4831C51AEED0076C884 /* LaunchScreen.storyboard in Resources */,
 				AFA4F4801C51AEED0076C884 /* Assets.xcassets in Resources */,
+				AFA4F48F1C61B2660076C884 /* CardView.xib in Resources */,
 				AFA4F47E1C51AEED0076C884 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

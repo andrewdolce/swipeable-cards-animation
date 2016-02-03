@@ -9,9 +9,9 @@
 import UIKit
 
 class Card {
-    var color = UIColor.whiteColor()
+    var image: UIImage? = nil
 
-    init(color: UIColor) {
-        self.color = color
+    init(image: UIImage?) {
+        self.image = image
     }
 }
