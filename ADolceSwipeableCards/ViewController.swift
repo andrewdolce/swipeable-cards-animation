@@ -11,6 +11,9 @@ import IntrepidSwiftWisdom
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var frontImageView: UIImageView!
+
     @IBOutlet weak var cardContainerView: UIView!
 
     private var cards = [Card]()
@@ -48,7 +51,7 @@ class ViewController: UIViewController {
             addCardViewToBackOfStack(cardView)
         }
 
-        setTransformsOnCardsInStack(cardViewsInStack)
+        configureUIForCardsInStack(cardViewsInStack)
     }
 
     private func cardViewForIndex(index: Int) -> UIView {
@@ -77,6 +80,13 @@ class ViewController: UIViewController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    private func configureUIForCardsInStack(cardViews: [UIView]) {
+        setTransformsOnCardsInStack(cardViews)
+
+        let frontCard = cardViews.first as? CardView
+        switchToBackgroundImage(frontCard?.image)
+    }
+
     private func setTransformsOnCardsInStack(cardViews: [UIView]) {
         let transformsFrontToBack = [
             CGAffineTransformIdentity,
@@ -91,6 +101,13 @@ class ViewController: UIViewController {
         if let frontCard = cardViews.first as? CardView {
             frontCard.overlayAlpha = 0
         }
+    }
+
+    private func switchToBackgroundImage(image: UIImage?) {
+        backImageView.image = image
+        backImageView.alpha = 1.0
+        frontImageView.alpha = 0.0
+        swap(&backImageView, &frontImageView)
     }
 
     private func animateToNextCard() {
@@ -116,7 +133,7 @@ class ViewController: UIViewController {
 
         UIView.animateWithDuration(0.5, animations: {
             // Animate cards forward in stack
-            self.setTransformsOnCardsInStack(newStack)
+            self.configureUIForCardsInStack(newStack)
         }, completion: { finished in
             frontCardView.removeFromSuperview()
             self.cardViewsInStack = newStack
